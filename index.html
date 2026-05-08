@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0e1a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="VitaCore" />
+  <meta name="description" content="Seu companheiro de saúde e bem-estar masculino. Treinos, acompanhamento e conteúdo educativo." />
+
+  <title>VitaCore — Saúde & Bem-estar</title>
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json" />
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+
+  <!-- Splash / Lock Screen -->
+  <div id="splash-screen" class="splash-screen">
+    <div class="splash-content">
+      <div class="splash-logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="24" cy="24" r="22" stroke="url(#logoGrad)" stroke-width="2.5"/>
+            <path d="M24 12 C24 12, 32 18, 32 26 C32 31.5 28.5 36 24 36 C19.5 36 16 31.5 16 26 C16 18 24 12 24 12Z" fill="url(#logoGrad2)" opacity="0.9"/>
+            <path d="M20 22 C20 22 22 26 24 24 C26 22 28 18 24 14" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.7"/>
+            <defs>
+              <linearGradient id="logoGrad" x1="0" y1="0" x2="48" y2="48">
+                <stop offset="0%" stop-color="#4f9cf9"/>
+                <stop offset="100%" stop-color="#6b5ce7"/>
+              </linearGradient>
+              <linearGradient id="logoGrad2" x1="0" y1="0" x2="48" y2="48">
+                <stop offset="0%" stop-color="#4f9cf9"/>
+                <stop offset="100%" stop-color="#6b5ce7"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <h1 class="splash-title">VitaCore</h1>
+        <p class="splash-subtitle">Saúde & Bem-estar</p>
+      </div>
+      <div class="splash-loader">
+        <div class="loader-bar"><div class="loader-fill"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PIN Lock Screen -->
+  <div id="lock-screen" class="lock-screen hidden">
+    <div class="lock-content">
+      <div class="lock-logo">
+        <div class="logo-icon small">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="24" cy="24" r="22" stroke="url(#lockGrad)" stroke-width="2.5"/>
+            <path d="M24 12 C24 12, 32 18, 32 26 C32 31.5 28.5 36 24 36 C19.5 36 16 31.5 16 26 C16 18 24 12 24 12Z" fill="url(#lockGrad2)" opacity="0.9"/>
+            <defs>
+              <linearGradient id="lockGrad" x1="0" y1="0" x2="48" y2="48">
+                <stop offset="0%" stop-color="#4f9cf9"/>
+                <stop offset="100%" stop-color="#6b5ce7"/>
+              </linearGradient>
+              <linearGradient id="lockGrad2" x1="0" y1="0" x2="48" y2="48">
+                <stop offset="0%" stop-color="#4f9cf9"/>
+                <stop offset="100%" stop-color="#6b5ce7"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <h2>VitaCore</h2>
+        <p>Digite seu PIN para continuar</p>
+      </div>
+      <div class="pin-dots" id="pin-dots">
+        <span class="pin-dot" id="dot-0"></span>
+        <span class="pin-dot" id="dot-1"></span>
+        <span class="pin-dot" id="dot-2"></span>
+        <span class="pin-dot" id="dot-3"></span>
+      </div>
+      <div class="pin-error hidden" id="pin-error">PIN incorreto</div>
+      <div class="pin-keypad">
+        <button class="key-btn" data-key="1">1</button>
+        <button class="key-btn" data-key="2">2</button>
+        <button class="key-btn" data-key="3">3</button>
+        <button class="key-btn" data-key="4">4</button>
+        <button class="key-btn" data-key="5">5</button>
+        <button class="key-btn" data-key="6">6</button>
+        <button class="key-btn" data-key="7">7</button>
+        <button class="key-btn" data-key="8">8</button>
+        <button class="key-btn" data-key="9">9</button>
+        <button class="key-btn key-empty"></button>
+        <button class="key-btn" data-key="0">0</button>
+        <button class="key-btn key-delete" id="key-delete">⌫</button>
+      </div>
+      <button class="skip-lock-btn" id="skip-lock-btn">Usar sem PIN</button>
+    </div>
+  </div>
+
+  <!-- Onboarding -->
+  <div id="onboarding" class="onboarding hidden">
+    <div class="onboarding-slides" id="onboarding-slides">
+      <!-- Slide 1 -->
+      <div class="onboarding-slide active" data-slide="0">
+        <div class="slide-illustration">
+          <div class="illustration-circle">
+            <span class="illustration-emoji">💪</span>
+          </div>
+        </div>
+        <h2>Bem-vindo ao VitaCore</h2>
+        <p>Seu assistente de saúde e bem-estar masculino. Discreto, privado e eficaz.</p>
+        <div class="medical-disclaimer">
+          <p>⚕️ Este app é para fins informativos e de suporte ao bem-estar. Não substitui consulta médica profissional.</p>
+        </div>
+      </div>
+      <!-- Slide 2 -->
+      <div class="onboarding-slide" data-slide="1">
+        <div class="slide-illustration">
+          <div class="illustration-circle">
+            <span class="illustration-emoji">🎯</span>
+          </div>
+        </div>
+        <h2>Treinos Personalizados</h2>
+        <p>Planos de exercícios de assoalho pélvico progressivos adaptados ao seu nível.</p>
+      </div>
+      <!-- Slide 3 -->
+      <div class="onboarding-slide" data-slide="2">
+        <div class="slide-illustration">
+          <div class="illustration-circle">
+            <span class="illustration-emoji">📊</span>
+          </div>
+        </div>
+        <h2>Acompanhe seu Progresso</h2>
+        <p>Visualize sua evolução com gráficos intuitivos e celebre suas conquistas.</p>
+      </div>
+      <!-- Slide 4 -->
+      <div class="onboarding-slide" data-slide="3">
+        <div class="slide-illustration">
+          <div class="illustration-circle">
+            <span class="illustration-emoji">🔒</span>
+          </div>
+        </div>
+        <h2>100% Privado & Seguro</h2>
+        <p>Todos os seus dados ficam no seu dispositivo. Proteja com PIN para maior segurança.</p>
+        <div class="pin-setup-prompt">
+          <button class="btn btn-primary" id="setup-pin-btn">Configurar PIN</button>
+          <button class="btn btn-ghost" id="skip-pin-btn">Pular por agora</button>
+        </div>
+      </div>
+    </div>
+    <div class="onboarding-nav">
+      <div class="slide-indicators" id="slide-indicators">
+        <span class="indicator active"></span>
+        <span class="indicator"></span>
+        <span class="indicator"></span>
+        <span class="indicator"></span>
+      </div>
+      <button class="btn btn-primary onboarding-next" id="onboarding-next">Próximo</button>
+    </div>
+  </div>
+
+  <!-- PIN Setup Modal -->
+  <div id="pin-setup-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <h3 id="pin-setup-title">Criar PIN de 4 dígitos</h3>
+      <p id="pin-setup-desc">Escolha um PIN para proteger o acesso</p>
+      <div class="pin-dots small" id="setup-pin-dots">
+        <span class="pin-dot" id="sdot-0"></span>
+        <span class="pin-dot" id="sdot-1"></span>
+        <span class="pin-dot" id="sdot-2"></span>
+        <span class="pin-dot" id="sdot-3"></span>
+      </div>
+      <div class="pin-keypad">
+        <button class="key-btn" data-setup-key="1">1</button>
+        <button class="key-btn" data-setup-key="2">2</button>
+        <button class="key-btn" data-setup-key="3">3</button>
+        <button class="key-btn" data-setup-key="4">4</button>
+        <button class="key-btn" data-setup-key="5">5</button>
+        <button class="key-btn" data-setup-key="6">6</button>
+        <button class="key-btn" data-setup-key="7">7</button>
+        <button class="key-btn" data-setup-key="8">8</button>
+        <button class="key-btn" data-setup-key="9">9</button>
+        <button class="key-btn key-empty"></button>
+        <button class="key-btn" data-setup-key="0">0</button>
+        <button class="key-btn key-delete" id="setup-key-delete">⌫</button>
+      </div>
+      <button class="btn btn-ghost modal-cancel" id="pin-modal-cancel">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- Main App -->
+  <div id="app" class="app hidden">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <div class="header-logo">
+          <svg viewBox="0 0 32 32" fill="none" width="28" height="28">
+            <circle cx="16" cy="16" r="14" stroke="url(#hGrad)" stroke-width="2"/>
+            <path d="M16 7 C16 7, 22 11.5, 22 17 C22 20.5 19.5 24 16 24 C12.5 24 10 20.5 10 17 C10 11.5 16 7 16 7Z" fill="url(#hGrad2)"/>
+            <defs>
+              <linearGradient id="hGrad" x1="0" y1="0" x2="32" y2="32">
+                <stop offset="0%" stop-color="#4f9cf9"/>
+                <stop offset="100%" stop-color="#6b5ce7"/>
+              </linearGradient>
+              <linearGradient id="hGrad2" x1="0" y1="0" x2="32" y2="32">
+                <stop offset="0%" stop-color="#4f9cf9"/>
+                <stop offset="100%" stop-color="#6b5ce7"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <span>VitaCore</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <button class="header-btn" id="streak-btn" title="Sequência">
+          <span class="streak-icon">🔥</span>
+          <span class="streak-count" id="header-streak">0</span>
+        </button>
+        <button class="header-btn" id="notification-btn" title="Notificações">
+          <svg viewBox="0 0 24 24" fill="none" width="22" height="22">
+            <path d="M12 22c1.1 0 2-.9 2-2H10c0 1.1.9 2 2 2zm6-6V11c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" fill="currentColor"/>
+          </svg>
+        </button>
+        <button class="header-btn" id="settings-btn" title="Configurações">
+          <svg viewBox="0 0 24 24" fill="none" width="22" height="22">
+            <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Page Container -->
+    <main class="page-container" id="page-container">
+      <!-- Pages rendered by JS -->
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+      <button class="nav-btn active" data-page="home" id="nav-home">
+        <svg viewBox="0 0 24 24" fill="none" width="22" height="22">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" fill="currentColor"/>
+        </svg>
+        <span>Início</span>
+      </button>
+      <button class="nav-btn" data-page="training" id="nav-training">
+        <svg viewBox="0 0 24 24" fill="none" width="22" height="22">
+          <path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29l-1.43-1.43z" fill="currentColor"/>
+        </svg>
+        <span>Treinos</span>
+      </button>
+      <button class="nav-btn" data-page="progress" id="nav-progress">
+        <svg viewBox="0 0 24 24" fill="none" width="22" height="22">
+          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l7.59-7.59L21 8l-9 9z" fill="currentColor"/>
+          <path d="M7 15l2-4 3 3 4-5 4 6H7z" fill="currentColor" opacity="0.5"/>
+        </svg>
+        <span>Progresso</span>
+      </button>
+      <button class="nav-btn" data-page="wellness" id="nav-wellness">
+        <svg viewBox="0 0 24 24" fill="none" width="22" height="22">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="currentColor"/>
+        </svg>
+        <span>Bem-estar</span>
+      </button>
+      <button class="nav-btn" data-page="insights" id="nav-insights">
+        <svg viewBox="0 0 24 24" fill="none" width="22" height="22">
+          <path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z" fill="currentColor"/>
+        </svg>
+        <span>Insights</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Kegel Exercise Modal -->
+  <div id="kegel-modal" class="modal-overlay hidden">
+    <div class="modal-content exercise-modal">
+      <button class="modal-close" id="kegel-close">✕</button>
+      <div class="exercise-header">
+        <h3 id="exercise-title">Kegel Básico</h3>
+        <span class="exercise-badge" id="exercise-level-badge">Iniciante</span>
+      </div>
+      <div class="exercise-animation" id="exercise-animation">
+        <div class="kegel-visualizer">
+          <div class="kegel-ring outer"></div>
+          <div class="kegel-ring middle"></div>
+          <div class="kegel-ring inner"></div>
+          <div class="kegel-center" id="kegel-center"></div>
+        </div>
+        <p class="exercise-instruction" id="exercise-instruction">Prepare-se...</p>
+      </div>
+      <div class="exercise-stats">
+        <div class="stat-item">
+          <span class="stat-value" id="ex-sets">0</span>
+          <span class="stat-label">Séries</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value" id="ex-reps">0</span>
+          <span class="stat-label">Repetições</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value" id="ex-time">0:00</span>
+          <span class="stat-label">Tempo</span>
+        </div>
+      </div>
+      <div class="exercise-progress-bar">
+        <div class="exercise-progress-fill" id="exercise-progress-fill"></div>
+      </div>
+      <div class="exercise-controls">
+        <button class="btn btn-ghost" id="ex-restart">↺ Reiniciar</button>
+        <button class="btn btn-primary" id="ex-start-stop">▶ Iniciar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Breathing Modal -->
+  <div id="breathing-modal" class="modal-overlay hidden">
+    <div class="modal-content breathing-modal">
+      <button class="modal-close" id="breathing-close">✕</button>
+      <h3>Respiração 4-7-8</h3>
+      <p class="modal-desc">Técnica de relaxamento para reduzir ansiedade</p>
+      <div class="breathing-circle-container">
+        <div class="breathing-circle" id="breathing-circle">
+          <div class="breathing-inner">
+            <span class="breathing-text" id="breathing-text">Pronto</span>
+            <span class="breathing-timer" id="breathing-timer"></span>
+          </div>
+        </div>
+      </div>
+      <div class="breathing-phase" id="breathing-phase">Pressione iniciar</div>
+      <div class="breathing-controls">
+        <button class="btn btn-primary" id="breathing-start">▶ Iniciar</button>
+        <button class="btn btn-ghost" id="breathing-stop">■ Parar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- Settings Panel -->
+  <div id="settings-panel" class="settings-panel hidden">
+    <div class="settings-overlay" id="settings-overlay"></div>
+    <div class="settings-drawer">
+      <div class="settings-header">
+        <h3>Configurações</h3>
+        <button class="modal-close" id="settings-close">✕</button>
+      </div>
+      <div class="settings-content">
+        <div class="settings-section">
+          <h4>Privacidade</h4>
+          <div class="setting-item">
+            <div class="setting-info">
+              <span class="setting-name">Proteção por PIN</span>
+              <span class="setting-desc">Bloquear app ao fechar</span>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="pin-toggle" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="setting-item" id="change-pin-item" style="display:none;">
+            <div class="setting-info">
+              <span class="setting-name">Alterar PIN</span>
+            </div>
+            <button class="btn btn-small btn-secondary" id="change-pin-btn">Alterar</button>
+          </div>
+        </div>
+        <div class="settings-section">
+          <h4>Lembretes</h4>
+          <div class="setting-item">
+            <div class="setting-info">
+              <span class="setting-name">Notificações de Treino</span>
+              <span class="setting-desc">Lembrete diário</span>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="notif-toggle" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="setting-item" id="notif-time-item">
+            <div class="setting-info">
+              <span class="setting-name">Horário do Lembrete</span>
+            </div>
+            <input type="time" id="reminder-time" value="08:00" class="time-input" />
+          </div>
+        </div>
+        <div class="settings-section">
+          <h4>Dados</h4>
+          <div class="setting-item">
+            <div class="setting-info">
+              <span class="setting-name">Exportar Dados</span>
+              <span class="setting-desc">Baixar histórico em JSON</span>
+            </div>
+            <button class="btn btn-small btn-secondary" id="export-data-btn">Exportar</button>
+          </div>
+          <div class="setting-item">
+            <div class="setting-info">
+              <span class="setting-name">Limpar Dados</span>
+              <span class="setting-desc">Apagar todo o histórico</span>
+            </div>
+            <button class="btn btn-small btn-danger" id="clear-data-btn">Limpar</button>
+          </div>
+        </div>
+        <div class="settings-section">
+          <h4>Sobre</h4>
+          <div class="setting-item">
+            <div class="setting-info">
+              <span class="setting-name">VitaCore v1.0.0</span>
+              <span class="setting-desc">Saúde & Bem-estar Masculino</span>
+            </div>
+          </div>
+          <div class="setting-item disclaimer-item">
+            <p class="disclaimer-text">⚕️ Este aplicativo é uma ferramenta de suporte ao bem-estar e não substitui aconselhamento, diagnóstico ou tratamento médico profissional. Sempre consulte um médico ou profissional de saúde qualificado.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Service Worker & App JS -->
+  <script src="js/storage.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/pages.js"></script>
+  <script src="js/exercises.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
