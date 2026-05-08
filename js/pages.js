@@ -131,7 +131,7 @@ const Pages = {
       <div id="groin-tab" class="tab-content hidden">
         <p class="section-desc">Exercícios complementares para melhorar circulação e fortalecer músculos adjacentes.</p>
         ${WORKOUTS.groin.map(g=>`
-        <div class="workout-card">
+        <div class="workout-card" id="groin-card-${g.id}">
           <div class="workout-header">
             <div>
               <h4 class="workout-name">${g.emoji} ${g.name}</h4>
@@ -141,10 +141,49 @@ const Pages = {
           </div>
           <p class="workout-desc">${g.desc}</p>
           <div class="workout-meta"><span>⏱ ${g.duration} segundos</span></div>
-          <button class="btn btn-secondary btn-full" onclick="App.showToast('Função em breve!')">Ver Demonstração</button>
+          <div class="groin-timer hidden" id="groin-timer-${g.id}">
+            <div class="groin-progress-bar"><div class="groin-progress-fill" id="groin-fill-${g.id}"></div></div>
+            <span class="groin-countdown" id="groin-count-${g.id}">${g.duration}s</span>
+          </div>
+          <button class="btn btn-secondary btn-full" id="groin-btn-${g.id}" onclick="Pages.startGroin('${g.id}',${g.duration})">▶ Iniciar Exercício</button>
         </div>`).join('')}
       </div>
     </div>`;
+  },
+
+  groinTimers: {},
+
+  startGroin(id, duration) {
+    if(this.groinTimers[id]) return;
+    const btn = document.getElementById('groin-btn-'+id);
+    const timer = document.getElementById('groin-timer-'+id);
+    const fill = document.getElementById('groin-fill-'+id);
+    const count = document.getElementById('groin-count-'+id);
+    timer.classList.remove('hidden');
+    btn.textContent = '⏸ Em andamento...';
+    btn.disabled = true;
+    let remaining = duration;
+    count.textContent = remaining + 's';
+    fill.style.width = '0%';
+    this.groinTimers[id] = setInterval(()=>{
+      remaining--;
+      count.textContent = remaining + 's';
+      fill.style.width = ((duration-remaining)/duration*100)+'%';
+      if(remaining <= 0) {
+        clearInterval(this.groinTimers[id]);
+        this.groinTimers[id] = null;
+        btn.textContent = '✓ Completo!';
+        btn.disabled = false;
+        count.textContent = 'Feito!';
+        fill.style.width = '100%';
+        if(navigator.vibrate) navigator.vibrate([100,50,100]);
+        App.showToast('✅ '+document.querySelector('#groin-card-'+id+' .workout-name').textContent+' concluído!');
+        setTimeout(()=>{
+          btn.textContent = '▶ Iniciar Exercício';
+          timer.classList.add('hidden');
+        }, 3000);
+      }
+    }, 1000);
   },
 
   switchTab(show, hide, btn) {
@@ -296,12 +335,18 @@ const Pages = {
 
   insights() {
     const articles = [
-      {icon:'🔬',tag:'Ciência',title:'Como o Kegel melhora a saúde erétil',preview:'O músculo pubococcígeo (PC) é responsável pelo controle do fluxo sanguíneo durante a ereção...'},
-      {icon:'🧠',tag:'Mental',title:'A conexão entre ansiedade e desempenho sexual',preview:'A ansiedade de desempenho ativa o sistema nervoso simpático, que pode inibir a resposta erétil...'},
-      {icon:'🥗',tag:'Nutrição',title:'Alimentos que melhoram a circulação',preview:'Nitratos presentes em vegetais de folha verde são convertidos em óxido nítrico pelo corpo...'},
-      {icon:'😴',tag:'Sono',title:'Por que dormir bem é crucial para a testosterona',preview:'Cerca de 70% da liberação diária de testosterona ocorre durante o sono...'},
-      {icon:'💊',tag:'Saúde',title:'Quando procurar um médico?',preview:'A disfunção erétil pode ser sintoma de condições cardiovasculares subjacentes. Consulte um urologista se...'},
-      {icon:'🏃',tag:'Exercício',title:'Aeróbico vs. Força: o que é melhor?',preview:'Estudos mostram que exercícios aeróbicos têm o maior impacto positivo na função erétil...'},
+      {icon:'🔬',tag:'Ciência',title:'Como o Kegel melhora a saúde erétil',preview:'O músculo pubococcígeo (PC) é responsável pelo controle do fluxo sanguíneo durante a ereção...',
+       body:'O músculo pubococcígeo (PC) se estende do osso púbico ao cóccix e forma a base do assoalho pélvico. Ele desempenha papel crucial na função erétil ao:\n\n<strong>1. Controle do fluxo sanguíneo</strong>\nDurante a ereção, o músculo PC comprime as veias que drenam sangue do pênis, ajudando a manter a rigidez. Exercícios de Kegel fortalecem essa capacidade de compressão.\n\n<strong>2. Evidências científicas</strong>\nUm estudo publicado no British Journal of General Practice mostrou que 40% dos homens com disfunção erétil recuperaram a função normal após 3 meses de exercícios de Kegel, e outros 35% apresentaram melhora significativa.\n\n<strong>3. Como praticar corretamente</strong>\nIdentifique o músculo PC interrompendo o fluxo urinário (apenas como teste). Depois, pratique as contrações sentado ou deitado, sem contrair abdômen ou glúteos. A consistência é mais importante que a intensidade.\n\n<strong>4. Resultados esperados</strong>\nMelhorias perceptíveis geralmente ocorrem entre 4-6 semanas de prática diária consistente.'},
+      {icon:'🧠',tag:'Mental',title:'A conexão entre ansiedade e desempenho sexual',preview:'A ansiedade de desempenho ativa o sistema nervoso simpático, que pode inibir a resposta erétil...',
+       body:'A ansiedade de desempenho cria um ciclo vicioso: o medo de falhar ativa a resposta de "luta ou fuga", liberando adrenalina que contrai os vasos sanguíneos — exatamente o oposto do que é necessário para uma ereção.\n\n<strong>O ciclo da ansiedade</strong>\nPreocupação → Ativação simpática → Dificuldade erétil → Mais preocupação. Quebrar esse ciclo é fundamental.\n\n<strong>Técnicas comprovadas</strong>\n• <strong>Respiração 4-7-8:</strong> Ativa o sistema parassimpático (relaxamento)\n• <strong>Mindfulness:</strong> Foco no momento presente reduz pensamentos intrusivos\n• <strong>Dessensibilização gradual:</strong> Exposição progressiva sem pressão de desempenho\n\n<strong>Quando buscar ajuda profissional</strong>\nSe a ansiedade persiste por mais de 3 meses, considere procurar um psicólogo especializado em sexualidade. A terapia cognitivo-comportamental tem taxas de sucesso superiores a 70%.'},
+      {icon:'🥗',tag:'Nutrição',title:'Alimentos que melhoram a circulação',preview:'Nitratos presentes em vegetais de folha verde são convertidos em óxido nítrico pelo corpo...',
+       body:'A ereção depende fundamentalmente de boa circulação sanguínea. O óxido nítrico (NO) é o principal vasodilatador envolvido nesse processo.\n\n<strong>Alimentos ricos em nitratos</strong>\n• Beterraba, rúcula, espinafre, agrião\n• Convertem-se em óxido nítrico no corpo\n• Efeito vasodilatador em 2-3 horas após consumo\n\n<strong>Flavonoides e antocianinas</strong>\n• Frutas vermelhas (mirtilo, morango, framboesa)\n• Chocolate amargo (70%+ cacau)\n• Estudo de Harvard: homens que consomem flavonoides regularmente têm 14% menos risco de DE\n\n<strong>Ômega-3</strong>\n• Salmão, sardinha, atum, linhaça\n• Melhora a elasticidade dos vasos sanguíneos\n• Anti-inflamatório natural\n\n<strong>O que evitar</strong>\n• Alimentos ultraprocessados, excesso de açúcar refinado, gorduras trans e consumo excessivo de álcool prejudicam a função vascular.'},
+      {icon:'😴',tag:'Sono',title:'Por que dormir bem é crucial para a testosterona',preview:'Cerca de 70% da liberação diária de testosterona ocorre durante o sono...',
+       body:'A testosterona é o principal hormônio da saúde sexual masculina, e sua produção está intimamente ligada à qualidade do sono.\n\n<strong>O que acontece durante o sono</strong>\nA maior parte da testosterona é produzida durante o sono REM. Homens que dormem apenas 5 horas têm níveis de testosterona 10-15% menores que aqueles que dormem 7-8 horas.\n\n<strong>Dicas para melhorar o sono</strong>\n• Mantenha horários regulares (mesmo nos fins de semana)\n• Evite telas 1h antes de dormir (luz azul suprime melatonina)\n• Ambiente escuro e fresco (18-20°C ideal)\n• Evite cafeína após as 14h\n• Exercício regular (mas não próximo de dormir)\n\n<strong>Sinais de baixa testosterona</strong>\nFadiga persistente, redução da libido, dificuldade de concentração, perda de massa muscular e irritabilidade podem indicar níveis baixos. Procure um endocrinologista para avaliação.'},
+      {icon:'💊',tag:'Saúde',title:'Quando procurar um médico?',preview:'A disfunção erétil pode ser sintoma de condições cardiovasculares subjacentes. Consulte um urologista se...',
+       body:'A disfunção erétil (DE) pode ser um sinal precoce de problemas de saúde mais sérios. Não ignore — procure ajuda médica.\n\n<strong>Sinais de alerta</strong>\n• DE persistente por mais de 3 meses\n• Perda completa de ereções noturnas/matinais\n• Dor durante a ereção ou ejaculação\n• Alterações na curvatura do pênis\n• Redução significativa da libido\n\n<strong>A DE como marcador cardiovascular</strong>\nEstudos mostram que a DE pode preceder eventos cardiovasculares em 3-5 anos. As artérias do pênis são menores e mais sensíveis a danos vasculares que as coronárias.\n\n<strong>Especialistas indicados</strong>\n• <strong>Urologista:</strong> Avaliação física e hormonal\n• <strong>Cardiologista:</strong> Se há fatores de risco cardiovascular\n• <strong>Endocrinologista:</strong> Suspeita de alteração hormonal\n• <strong>Psicólogo/Psiquiatra:</strong> Componente emocional\n\n<strong>Exames comuns</strong>\nHemograma, glicemia, perfil lipídico, testosterona total e livre, PSA e ultrassom com doppler peniano.'},
+      {icon:'🏃',tag:'Exercício',title:'Aeróbico vs. Força: o que é melhor?',preview:'Estudos mostram que exercícios aeróbicos têm o maior impacto positivo na função erétil...',
+       body:'Ambos os tipos de exercício beneficiam a saúde sexual, mas de formas diferentes.\n\n<strong>Exercício aeróbico</strong>\n• Caminhada rápida, corrida, natação, ciclismo\n• Melhora direta da circulação sanguínea\n• 150 min/semana reduz risco de DE em 30%\n• Benefício mais direto e rápido na função erétil\n\n<strong>Exercício de força</strong>\n• Musculação, exercícios com peso corporal\n• Aumenta naturalmente a testosterona (especialmente exercícios compostos)\n• Melhora autoestima e imagem corporal\n• Benefício hormonal indireto\n\n<strong>A combinação ideal</strong>\n• 3-4x aeróbico por semana (30-45 min)\n• 2-3x musculação por semana\n• Exercícios de Kegel diariamente\n• Alongamento e mobilidade\n\n<strong>Cuidados</strong>\nExcesso de exercício (overtraining) pode ter efeito oposto, reduzindo testosterona. Ciclismo prolongado pode comprimir nervos perineais — use selim adequado e faça pausas.'},
     ];
     return `
     <div class="page">
@@ -310,17 +355,35 @@ const Pages = {
       <div class="disclaimer-banner">
         ⚕️ Informações educativas. Consulte um médico para diagnóstico e tratamento.
       </div>
-      ${articles.map(a=>`
-      <div class="article-card" onclick="App.showToast('Artigo completo em breve!')">
+      ${articles.map((a,i)=>`
+      <div class="article-card" id="article-${i}" onclick="Pages.toggleArticle(${i})">
         <div class="article-header">
           <span class="article-icon">${a.icon}</span>
           <span class="article-tag">${a.tag}</span>
         </div>
         <h4 class="article-title">${a.title}</h4>
         <p class="article-preview">${a.preview}</p>
-        <span class="article-read">Ler mais →</span>
+        <div class="article-body hidden" id="article-body-${i}">
+          <div class="article-content">${a.body.replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>')}</div>
+        </div>
+        <span class="article-read" id="article-toggle-${i}">Ler mais →</span>
       </div>`).join('')}
     </div>`;
+  },
+
+  toggleArticle(i) {
+    const body = document.getElementById('article-body-'+i);
+    const toggle = document.getElementById('article-toggle-'+i);
+    const card = document.getElementById('article-'+i);
+    if(body.classList.contains('hidden')) {
+      body.classList.remove('hidden');
+      toggle.textContent = '← Fechar';
+      card.classList.add('expanded');
+    } else {
+      body.classList.add('hidden');
+      toggle.textContent = 'Ler mais →';
+      card.classList.remove('expanded');
+    }
   },
 
   afterRender(page) {

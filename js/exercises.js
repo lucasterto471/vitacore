@@ -100,9 +100,11 @@ const ExerciseController = {
       if(this.phase === 'prepare') {
         this.phase = 'contract';
         this.phaseTime = this.current.holdSec;
+        if(navigator.vibrate) navigator.vibrate(80);
       } else if(this.phase === 'contract') {
         this.phase = 'relax';
         this.phaseTime = this.current.restSec;
+        if(navigator.vibrate) navigator.vibrate([40,30,40]);
         this.currentRep++;
         document.getElementById('ex-reps').textContent = this.currentRep - 1;
         if(this.currentRep > this.current.reps) {
@@ -117,6 +119,7 @@ const ExerciseController = {
       } else if(this.phase === 'relax') {
         this.phase = 'contract';
         this.phaseTime = this.current.holdSec;
+        if(navigator.vibrate) navigator.vibrate(80);
       }
     }
     this.updateDisplay();
