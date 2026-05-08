@@ -57,6 +57,7 @@ const App = {
     document.getElementById('pin-modal-cancel').addEventListener('click',()=>this.closeSetupPin());
     document.getElementById('setup-pin-btn').addEventListener('click',()=>this.openSetupPin());
     document.getElementById('skip-pin-btn').addEventListener('click',()=>{
+      document.getElementById('pin-setup-modal').classList.add('hidden');
       document.getElementById('onboarding').classList.add('hidden');
       this.showApp();
     });
