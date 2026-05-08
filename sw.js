@@ -1,4 +1,4 @@
-const CACHE="vitacore-v2",ASSETS=["/","index.html","css/main.css","js/storage.js","js/charts.js","js/pages.js","js/exercises.js","js/app.js","manifest.json"];
+const CACHE="vitacore-v3",ASSETS=["./","index.html","css/main.css","js/storage.js","js/charts.js","js/pages.js","js/exercises.js","js/app.js","manifest.json"];
 self.addEventListener("install",e=>{self.skipWaiting();e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)))});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
 self.addEventListener("fetch",e=>{e.respondWith(fetch(e.request).then(r=>{if(r&&r.status===200){const c=r.clone();caches.open(CACHE).then(cache=>cache.put(e.request,c))}return r}).catch(()=>caches.match(e.request).then(r=>r||caches.match("index.html"))))});

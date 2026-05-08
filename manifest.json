@@ -2,7 +2,7 @@
   "name": "VitaCore — Saúde & Bem-estar",
   "short_name": "VitaCore",
   "description": "Seu companheiro de saúde e bem-estar masculino",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#0a0e1a",
   "theme_color": "#0a0e1a",
