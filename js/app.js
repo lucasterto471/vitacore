@@ -173,7 +173,7 @@ const App = {
     else if(page==='training') html=Pages.training();
     else if(page==='progress') html=Pages.progress();
     else if(page==='wellness') html=Pages.wellness();
-    else if(page==='insights') html=Pages.insights();
+    else if(page==='diet') html=Pages.diet();
     container.innerHTML = html;
     container.scrollTop = 0;
     Pages.afterRender(page);

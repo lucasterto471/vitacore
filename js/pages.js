@@ -70,9 +70,9 @@ const Pages = {
           <span class="quick-icon">📓</span>
           <span class="quick-name">Diário<br>de saúde</span>
         </button>
-        <button class="quick-card" onclick="App.navigateTo('insights')">
-          <span class="quick-icon">💡</span>
-          <span class="quick-name">Insights<br>do dia</span>
+        <button class="quick-card" onclick="App.navigateTo('diet')">
+          <span class="quick-icon">🥗</span>
+          <span class="quick-name">Guia de<br>Dieta</span>
         </button>
       </div>
 
@@ -333,57 +333,62 @@ const Pages = {
     return tips[new Date().getDate() % tips.length];
   },
 
-  insights() {
-    const articles = [
-      {icon:'🔬',tag:'Ciência',title:'Como o Kegel melhora a saúde erétil',preview:'O músculo pubococcígeo (PC) é responsável pelo controle do fluxo sanguíneo durante a ereção...',
-       body:'O músculo pubococcígeo (PC) se estende do osso púbico ao cóccix e forma a base do assoalho pélvico. Ele desempenha papel crucial na função erétil ao:\n\n<strong>1. Controle do fluxo sanguíneo</strong>\nDurante a ereção, o músculo PC comprime as veias que drenam sangue do pênis, ajudando a manter a rigidez. Exercícios de Kegel fortalecem essa capacidade de compressão.\n\n<strong>2. Evidências científicas</strong>\nUm estudo publicado no British Journal of General Practice mostrou que 40% dos homens com disfunção erétil recuperaram a função normal após 3 meses de exercícios de Kegel, e outros 35% apresentaram melhora significativa.\n\n<strong>3. Como praticar corretamente</strong>\nIdentifique o músculo PC interrompendo o fluxo urinário (apenas como teste). Depois, pratique as contrações sentado ou deitado, sem contrair abdômen ou glúteos. A consistência é mais importante que a intensidade.\n\n<strong>4. Resultados esperados</strong>\nMelhorias perceptíveis geralmente ocorrem entre 4-6 semanas de prática diária consistente.'},
-      {icon:'🧠',tag:'Mental',title:'A conexão entre ansiedade e desempenho sexual',preview:'A ansiedade de desempenho ativa o sistema nervoso simpático, que pode inibir a resposta erétil...',
-       body:'A ansiedade de desempenho cria um ciclo vicioso: o medo de falhar ativa a resposta de "luta ou fuga", liberando adrenalina que contrai os vasos sanguíneos — exatamente o oposto do que é necessário para uma ereção.\n\n<strong>O ciclo da ansiedade</strong>\nPreocupação → Ativação simpática → Dificuldade erétil → Mais preocupação. Quebrar esse ciclo é fundamental.\n\n<strong>Técnicas comprovadas</strong>\n• <strong>Respiração 4-7-8:</strong> Ativa o sistema parassimpático (relaxamento)\n• <strong>Mindfulness:</strong> Foco no momento presente reduz pensamentos intrusivos\n• <strong>Dessensibilização gradual:</strong> Exposição progressiva sem pressão de desempenho\n\n<strong>Quando buscar ajuda profissional</strong>\nSe a ansiedade persiste por mais de 3 meses, considere procurar um psicólogo especializado em sexualidade. A terapia cognitivo-comportamental tem taxas de sucesso superiores a 70%.'},
-      {icon:'🥗',tag:'Nutrição',title:'Alimentos que melhoram a circulação',preview:'Nitratos presentes em vegetais de folha verde são convertidos em óxido nítrico pelo corpo...',
-       body:'A ereção depende fundamentalmente de boa circulação sanguínea. O óxido nítrico (NO) é o principal vasodilatador envolvido nesse processo.\n\n<strong>Alimentos ricos em nitratos</strong>\n• Beterraba, rúcula, espinafre, agrião\n• Convertem-se em óxido nítrico no corpo\n• Efeito vasodilatador em 2-3 horas após consumo\n\n<strong>Flavonoides e antocianinas</strong>\n• Frutas vermelhas (mirtilo, morango, framboesa)\n• Chocolate amargo (70%+ cacau)\n• Estudo de Harvard: homens que consomem flavonoides regularmente têm 14% menos risco de DE\n\n<strong>Ômega-3</strong>\n• Salmão, sardinha, atum, linhaça\n• Melhora a elasticidade dos vasos sanguíneos\n• Anti-inflamatório natural\n\n<strong>O que evitar</strong>\n• Alimentos ultraprocessados, excesso de açúcar refinado, gorduras trans e consumo excessivo de álcool prejudicam a função vascular.'},
-      {icon:'😴',tag:'Sono',title:'Por que dormir bem é crucial para a testosterona',preview:'Cerca de 70% da liberação diária de testosterona ocorre durante o sono...',
-       body:'A testosterona é o principal hormônio da saúde sexual masculina, e sua produção está intimamente ligada à qualidade do sono.\n\n<strong>O que acontece durante o sono</strong>\nA maior parte da testosterona é produzida durante o sono REM. Homens que dormem apenas 5 horas têm níveis de testosterona 10-15% menores que aqueles que dormem 7-8 horas.\n\n<strong>Dicas para melhorar o sono</strong>\n• Mantenha horários regulares (mesmo nos fins de semana)\n• Evite telas 1h antes de dormir (luz azul suprime melatonina)\n• Ambiente escuro e fresco (18-20°C ideal)\n• Evite cafeína após as 14h\n• Exercício regular (mas não próximo de dormir)\n\n<strong>Sinais de baixa testosterona</strong>\nFadiga persistente, redução da libido, dificuldade de concentração, perda de massa muscular e irritabilidade podem indicar níveis baixos. Procure um endocrinologista para avaliação.'},
-      {icon:'💊',tag:'Saúde',title:'Quando procurar um médico?',preview:'A disfunção erétil pode ser sintoma de condições cardiovasculares subjacentes. Consulte um urologista se...',
-       body:'A disfunção erétil (DE) pode ser um sinal precoce de problemas de saúde mais sérios. Não ignore — procure ajuda médica.\n\n<strong>Sinais de alerta</strong>\n• DE persistente por mais de 3 meses\n• Perda completa de ereções noturnas/matinais\n• Dor durante a ereção ou ejaculação\n• Alterações na curvatura do pênis\n• Redução significativa da libido\n\n<strong>A DE como marcador cardiovascular</strong>\nEstudos mostram que a DE pode preceder eventos cardiovasculares em 3-5 anos. As artérias do pênis são menores e mais sensíveis a danos vasculares que as coronárias.\n\n<strong>Especialistas indicados</strong>\n• <strong>Urologista:</strong> Avaliação física e hormonal\n• <strong>Cardiologista:</strong> Se há fatores de risco cardiovascular\n• <strong>Endocrinologista:</strong> Suspeita de alteração hormonal\n• <strong>Psicólogo/Psiquiatra:</strong> Componente emocional\n\n<strong>Exames comuns</strong>\nHemograma, glicemia, perfil lipídico, testosterona total e livre, PSA e ultrassom com doppler peniano.'},
-      {icon:'🏃',tag:'Exercício',title:'Aeróbico vs. Força: o que é melhor?',preview:'Estudos mostram que exercícios aeróbicos têm o maior impacto positivo na função erétil...',
-       body:'Ambos os tipos de exercício beneficiam a saúde sexual, mas de formas diferentes.\n\n<strong>Exercício aeróbico</strong>\n• Caminhada rápida, corrida, natação, ciclismo\n• Melhora direta da circulação sanguínea\n• 150 min/semana reduz risco de DE em 30%\n• Benefício mais direto e rápido na função erétil\n\n<strong>Exercício de força</strong>\n• Musculação, exercícios com peso corporal\n• Aumenta naturalmente a testosterona (especialmente exercícios compostos)\n• Melhora autoestima e imagem corporal\n• Benefício hormonal indireto\n\n<strong>A combinação ideal</strong>\n• 3-4x aeróbico por semana (30-45 min)\n• 2-3x musculação por semana\n• Exercícios de Kegel diariamente\n• Alongamento e mobilidade\n\n<strong>Cuidados</strong>\nExcesso de exercício (overtraining) pode ter efeito oposto, reduzindo testosterona. Ciclismo prolongado pode comprimir nervos perineais — use selim adequado e faça pausas.'},
-    ];
+  diet() {
     return `
     <div class="page">
-      <h2 class="page-title">Insights</h2>
-      <p class="page-desc">Conteúdo baseado em evidências científicas para sua saúde.</p>
-      <div class="disclaimer-banner">
-        ⚕️ Informações educativas. Consulte um médico para diagnóstico e tratamento.
-      </div>
-      ${articles.map((a,i)=>`
-      <div class="article-card" id="article-${i}" onclick="Pages.toggleArticle(${i})">
-        <div class="article-header">
-          <span class="article-icon">${a.icon}</span>
-          <span class="article-tag">${a.tag}</span>
-        </div>
-        <h4 class="article-title">${a.title}</h4>
-        <p class="article-preview">${a.preview}</p>
-        <div class="article-body hidden" id="article-body-${i}">
-          <div class="article-content">${a.body.replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>')}</div>
-        </div>
-        <span class="article-read" id="article-toggle-${i}">Ler mais →</span>
-      </div>`).join('')}
-    </div>`;
-  },
+      <h2 class="page-title">Guia de Dieta (40+)</h2>
+      <p class="page-desc">Alimentos estratégicos para melhorar a circulação e a saúde erétil após os 40 anos.</p>
 
-  toggleArticle(i) {
-    const body = document.getElementById('article-body-'+i);
-    const toggle = document.getElementById('article-toggle-'+i);
-    const card = document.getElementById('article-'+i);
-    if(body.classList.contains('hidden')) {
-      body.classList.remove('hidden');
-      toggle.textContent = '← Fechar';
-      card.classList.add('expanded');
-    } else {
-      body.classList.add('hidden');
-      toggle.textContent = 'Ler mais →';
-      card.classList.remove('expanded');
-    }
+      <div class="disclaimer-banner">
+        ⚕️ Aos 40+, a saúde circulatória é o fator nº 1 para manter ereções fortes. A alimentação abaixo foca em limpar artérias e aumentar a produção de óxido nítrico.
+      </div>
+
+      <h3 class="section-title">🍉 Frutas Aliadas da Ereção</h3>
+      <div class="workout-card">
+        <h4 class="workout-name">Melancia</h4>
+        <p class="workout-desc">Rica em <strong>citrulina</strong>, um aminoácido que relaxa e dilata os vasos sanguíneos. Funciona como um vasodilatador natural, facilitando a chegada do sangue de forma rápida e segura.</p>
+      </div>
+      <div class="workout-card">
+        <h4 class="workout-name">Romã</h4>
+        <p class="workout-desc">A romã é um limpador de artérias. O seu suco ou consumo in natura é carregado de antioxidantes que melhoram significativamente o fluxo sanguíneo em homens acima de 40 anos.</p>
+      </div>
+      <div class="workout-card">
+        <h4 class="workout-name">Frutas Vermelhas</h4>
+        <p class="workout-desc">Morangos, mirtilos e amoras são ricos em <strong>flavonoides</strong>. Eles ajudam a manter a elasticidade das veias, que naturalmente diminui com a idade.</p>
+      </div>
+      <div class="workout-card">
+        <h4 class="workout-name">Banana</h4>
+        <p class="workout-desc">Rica em <strong>potássio</strong>, que ajuda a manter a pressão arterial controlada, diminuindo os riscos de problemas cardíacos e de circulação que afetam diretamente a ereção.</p>
+      </div>
+
+      <h3 class="section-title">🥗 Outros Alimentos Estratégicos</h3>
+      <div class="workout-card">
+        <h4 class="workout-name">Folhas Verdes Escuras</h4>
+        <p class="workout-desc">Espinafre, rúcula e couve contêm altas concentrações de <strong>nitratos naturais</strong>. O corpo converte isso diretamente em óxido nítrico — o combustível essencial para iniciar a ereção.</p>
+      </div>
+      <div class="workout-card">
+        <h4 class="workout-name">Nozes e Pistache</h4>
+        <p class="workout-desc">Excelentes fontes de gorduras saudáveis que combatem o colesterol ruim e desobstruem vasos. O pistache tem arginina, que melhora bastante o fluxo peniano.</p>
+      </div>
+      <div class="workout-card">
+        <h4 class="workout-name">Chocolate Amargo (70%+)</h4>
+        <p class="workout-desc">Coma de 1 a 2 quadradinhos por dia. O cacau protege o endotélio (a parede interna dos vasos sanguíneos), preservando a capacidade do corpo de bombear sangue sob demanda.</p>
+      </div>
+
+      <h3 class="section-title" style="color: var(--rose);">🚫 Os Grandes Inimigos (Evite)</h3>
+      <div class="workout-card" style="border-color: rgba(249,111,156,0.3);">
+        <h4 class="workout-name">Frituras e Gorduras Trans</h4>
+        <p class="workout-desc">Após os 40, o metabolismo desacelera. Alimentos ultraprocessados entopem primeiro as <strong>microartérias do pênis</strong> (que são muito finas), tornando a ereção fraca muito antes de causarem problemas no coração.</p>
+      </div>
+      <div class="workout-card" style="border-color: rgba(249,111,156,0.3);">
+        <h4 class="workout-name">Excesso de Açúcar e Doces</h4>
+        <p class="workout-desc">O açúcar em excesso enferruja os vasos por dentro. Ele causa picos de insulina que danificam a sensibilidade nervosa e a elasticidade capilar necessárias para uma boa resposta sexual.</p>
+      </div>
+      <div class="workout-card" style="border-color: rgba(249,111,156,0.3);">
+        <h4 class="workout-name">Álcool em Excesso</h4>
+        <p class="workout-desc">Apesar de parecer relaxante, o excesso de álcool atua como sedativo para o cérebro. Ele bloqueia os sinais vitais entre o sistema nervoso e o membro, sendo uma das maiores causas de falhas na hora H.</p>
+      </div>
+    </div>`;
   },
 
   afterRender(page) {
